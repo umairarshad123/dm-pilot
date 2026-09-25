@@ -1,0 +1,27 @@
+---
+# cPanel Git deployment for DM Pilot → https://bot.apexgrowthsolution.com
+# (Same pattern as the Apex dashboard/chat checkouts on this server, but its own folder + database.)
+# The subdomain's document root should be <DEPLOYPATH>/public; the root .htaccess below is a
+# safety net that also routes into public/ if the document root is the folder itself.
+deployment:
+  tasks:
+    - export DEPLOYPATH="$(cat .deploy-target 2>/dev/null || echo /home2/apexgrow/bot.apexgrowthsolution.com/)"
+    # Use PHP 8.3 explicitly (Laravel 13 needs it; the server's default CLI PHP may be older).
+    - export PHP="$(ls /opt/cpanel/ea-php83/root/usr/bin/php 2>/dev/null || command -v php)"
+    # Never "exit" in these tasks: cPanel runs them in one shell and would hang on "in progress".
+    - 'fail() { echo "=== DEPLOY STEP FAILED: $1 ==="; { date -u; echo "$1"; } >> "$DEPLOYPATH/storage/logs/deploy-failed.txt" 2>/dev/null; return 0; }'
+    - mkdir -p "$DEPLOYPATH"
+    - /bin/cp -R app bootstrap config database public resources routes "$DEPLOYPATH" || fail "copy code"
+    - /bin/cp artisan composer.json composer.lock .htaccess "$DEPLOYPATH" || fail "copy root files"
+    - mkdir -p "$DEPLOYPATH/storage/framework/cache/data" "$DEPLOYPATH/storage/framework/sessions" "$DEPLOYPATH/storage/framework/views" "$DEPLOYPATH/storage/logs" "$DEPLOYPATH/storage/app/public" "$DEPLOYPATH/storage/app/private" "$DEPLOYPATH/bootstrap/cache" || fail "storage tree"
+    - chmod -R 775 "$DEPLOYPATH/storage" "$DEPLOYPATH/bootstrap/cache" 2>&1 || true
+    - 'test -f "$DEPLOYPATH/.env" || fail "missing .env — create it before the first deploy"'
+    - cd "$DEPLOYPATH" && COMPOSER_MEMORY_LIMIT=-1 "$PHP" /opt/cpanel/composer/bin/composer install --no-dev --optimize-autoloader --no-interaction 2>&1 || fail "composer install"
+    - cd "$DEPLOYPATH" && "$PHP" artisan config:clear 2>&1 || fail "config:clear"
+    - cd "$DEPLOYPATH" && "$PHP" artisan migrate --force 2>&1 || fail "migrate"
+    - cd "$DEPLOYPATH" && "$PHP" artisan config:cache 2>&1 || fail "config:cache"
+    - cd "$DEPLOYPATH" && "$PHP" artisan route:cache 2>&1 || fail "route:cache"
+    - cd "$DEPLOYPATH" && "$PHP" artisan view:cache 2>&1 || fail "view:cache"
+    # Let a running scheduler-driven queue worker pick up the new code.
+    - cd "$DEPLOYPATH" && "$PHP" artisan queue:restart 2>&1 || true
+    - 'cd "$DEPLOYPATH" && date -u > storage/logs/deployed-at.txt 2>/dev/null; echo "=== DEPLOY FINISHED ==="'

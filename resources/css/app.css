@@ -1,0 +1,289 @@
+/*
+ | DM Pilot design system — Tailwind v4.
+ | Tokens live in @theme (they become utilities: bg-brand-600, shadow-card, text-ink ...).
+ | Reusable class recipes live in @layer components (ui-*). Blade components in
+ | resources/views/components/ui/* use these; see docs/UI_GUIDE.md.
+ */
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views';
+@source '../../app/Support';
+
+@custom-variant hocus (&:hover, &:focus-visible);
+
+@theme {
+    /* Typography — Inter is self-hosted at build time (vite.config.js -> @fonts). */
+    --font-sans: var(--font-inter, 'Inter'), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
+
+    --text-2xs: 0.6875rem;
+    --text-2xs--line-height: 1rem;
+
+    /* Brand — a vivid, ManyChat-like blue. Change the whole app's accent here. */
+    --color-brand-50: #eef5ff;
+    --color-brand-100: #d9e8ff;
+    --color-brand-200: #bcd7ff;
+    --color-brand-300: #8ebdff;
+    --color-brand-400: #5998ff;
+    --color-brand-500: #3375ff;
+    --color-brand-600: #1b56f5;
+    --color-brand-700: #1442e1;
+    --color-brand-800: #1737b6;
+    --color-brand-900: #19348f;
+    --color-brand-950: #142157;
+
+    /* Neutrals: slate. Aliases for readability in markup. */
+    --color-canvas: #f6f7f9; /* app background */
+    --color-surface: #ffffff; /* cards, sidebar */
+    --color-ink: #0f172a; /* primary text (slate-900) */
+    --color-ink-muted: #64748b; /* secondary text (slate-500) */
+    --color-line: #e5e8ee; /* hairline borders */
+    --color-line-strong: #d5dae3;
+
+    /* Semantic tones */
+    --color-success-50: #ecfdf5;
+    --color-success-100: #d1fae5;
+    --color-success-500: #10b981;
+    --color-success-600: #059669;
+    --color-success-700: #047857;
+    --color-warning-50: #fffbeb;
+    --color-warning-100: #fef3c7;
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+    --color-warning-700: #b45309;
+    --color-danger-50: #fff1f2;
+    --color-danger-100: #ffe4e6;
+    --color-danger-500: #f43f5e;
+    --color-danger-600: #e11d48;
+    --color-danger-700: #be123c;
+
+    /* Channels */
+    --color-messenger: #0084ff;
+    --color-messenger-soft: #e6f2ff;
+    --color-instagram: #e1306c;
+    --color-instagram-soft: #fdeef4;
+
+    /* Elevation */
+    --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+    --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.04);
+    --shadow-card-hover: 0 2px 4px -1px rgb(15 23 42 / 0.06), 0 8px 20px -6px rgb(15 23 42 / 0.1);
+    --shadow-pop: 0 10px 38px -10px rgb(15 23 42 / 0.25), 0 10px 20px -15px rgb(15 23 42 / 0.2);
+    --shadow-focus: 0 0 0 4px rgb(51 117 255 / 0.18);
+
+    --radius-card: 0.875rem;
+
+    --animate-fade-in: fade-in 0.15s ease-out;
+    --animate-slide-up: slide-up 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-shimmer: shimmer 1.6s linear infinite;
+
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes slide-up {
+        from { opacity: 0; transform: translateY(6px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes shimmer {
+        from { background-position: -200% 0; }
+        to { background-position: 200% 0; }
+    }
+}
+
+@layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        font-feature-settings: 'cv11', 'ss01';
+        scrollbar-gutter: stable;
+    }
+    body {
+        @apply bg-canvas text-ink font-sans text-sm;
+    }
+    button:not(:disabled),
+    [role='button']:not([aria-disabled='true']) {
+        cursor: pointer;
+    }
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 2px;
+    }
+    [x-cloak] {
+        display: none !important;
+    }
+    ::selection {
+        background: var(--color-brand-100);
+    }
+}
+
+@layer components {
+    /* ---- Surfaces ---- */
+    .ui-card {
+        @apply bg-surface rounded-(--radius-card) border border-line shadow-card;
+    }
+
+    /* ---- Form controls (also usable without Blade components) ---- */
+    .ui-input,
+    .legacy :is(input[type='text'], input[type='email'], input[type='password'], input[type='number'], input[type='url'], input[type='datetime-local'], input[type='time'], select, textarea) {
+        @apply block w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-sm text-ink shadow-xs
+            placeholder:text-slate-400 transition-[border-color,box-shadow] duration-150
+            hover:border-slate-300
+            focus:border-brand-500 focus:shadow-focus focus:outline-none
+            disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500
+            read-only:bg-slate-50;
+    }
+    .ui-input[aria-invalid='true'] {
+        @apply border-danger-500 focus:border-danger-500 focus:shadow-[0_0_0_4px_rgb(244_63_94/0.15)];
+    }
+    select.ui-input {
+        @apply appearance-none bg-no-repeat pr-9;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+        background-position: right 0.625rem center;
+        background-size: 1rem;
+    }
+    .ui-label {
+        @apply block text-sm font-medium text-slate-700;
+    }
+    .ui-hint {
+        @apply text-xs text-ink-muted;
+    }
+    .ui-error {
+        @apply text-xs font-medium text-danger-600;
+    }
+
+    /* ---- Tables ---- */
+    .ui-table {
+        @apply w-full border-separate border-spacing-0 text-left text-sm;
+    }
+    .ui-table thead th {
+        @apply sticky top-0 z-[1] border-b border-line bg-slate-50/80 px-4 py-2.5 text-2xs font-semibold tracking-wider
+            text-slate-500 uppercase whitespace-nowrap backdrop-blur first:pl-5 last:pr-5;
+    }
+    .ui-table tbody td {
+        @apply border-b border-line px-4 py-3 align-middle text-slate-700 first:pl-5 last:pr-5;
+    }
+    .ui-table tbody tr:last-child td {
+        @apply border-b-0;
+    }
+    .ui-table tbody tr {
+        @apply transition-colors;
+    }
+    .ui-table.is-hoverable tbody tr:hover td {
+        @apply bg-slate-50/70;
+    }
+
+    /* ---- Links ---- */
+    .ui-link {
+        @apply font-medium text-brand-600 underline-offset-2 hover:text-brand-700 hover:underline;
+    }
+
+    /* ---- Code ---- */
+    .ui-code {
+        @apply rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[0.8125em] text-slate-700;
+    }
+    .ui-pre,
+    .legacy pre {
+        @apply overflow-auto rounded-xl bg-slate-900 p-4 font-mono text-xs leading-relaxed text-slate-100;
+    }
+
+    /* ---- Skeleton shimmer ---- */
+    .ui-skeleton {
+        @apply animate-shimmer rounded-md;
+        background-image: linear-gradient(90deg, #eef1f5 0%, #e3e7ee 40%, #eef1f5 80%);
+        background-size: 200% 100%;
+    }
+
+    /* ---- Instagram gradient ---- */
+    .bg-instagram-gradient {
+        background-image: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+    }
+
+    /* ---- Submit buttons: spinner while the form submits (see app.js) ---- */
+    .ui-btn-spinner {
+        display: none;
+    }
+    .ui-btn[aria-busy='true'] {
+        @apply pointer-events-none;
+    }
+    .ui-btn[aria-busy='true'] > :not(.ui-btn-spinner) {
+        @apply opacity-0;
+    }
+    .ui-btn[aria-busy='true'] > .ui-btn-spinner {
+        @apply flex;
+    }
+
+    /* Nice thin scrollbars for panes */
+    .ui-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: #cfd6e0 transparent;
+    }
+}
+
+/*
+ | ---------------------------------------------------------------------------
+ | Legacy compatibility: pages that still use @extends('layouts.admin') with the
+ | old class names (.card, .btn, .badge ...). Scoped to .legacy so it never
+ | leaks into new pages. Delete once all pages are rebuilt on <x-layouts.app>.
+ | ---------------------------------------------------------------------------
+ */
+@layer components {
+    .legacy {
+        @apply text-sm leading-relaxed text-slate-700;
+    }
+    .legacy h1 { @apply mb-5 text-2xl font-semibold tracking-tight text-ink; }
+    .legacy h2 { @apply mb-3 text-base font-semibold text-ink; }
+    .legacy p { @apply my-2; }
+    .legacy ol { @apply my-2 list-decimal space-y-1.5 pl-5; }
+    .legacy ul:not(.pagination) { @apply my-2 list-disc pl-5; }
+    .legacy a:not(.btn) { @apply font-medium text-brand-600 hover:text-brand-700 hover:underline; }
+    .legacy b, .legacy strong { @apply font-semibold text-ink; }
+    .legacy .card { @apply mb-5 rounded-(--radius-card) border border-line bg-surface p-5 shadow-card; }
+    .legacy .grid { @apply grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4; }
+    .legacy .grid > .card { @apply mb-0; }
+    .legacy .two-col > * { @apply min-w-0; }
+    .legacy .stat .n { @apply text-2xl font-semibold tracking-tight text-ink tabular-nums; }
+    .legacy .stat .l { @apply mt-1 text-xs font-medium text-ink-muted; }
+    .legacy table { @apply w-full border-collapse; }
+    .legacy th, .legacy td { @apply border-b border-line px-3 py-2.5 text-left align-top; }
+    .legacy tr:last-child td { @apply border-b-0; }
+    .legacy th { @apply bg-slate-50 text-2xs font-semibold tracking-wider text-slate-500 uppercase; }
+    .legacy .table-wrap { @apply overflow-x-auto p-0; }
+    .legacy .table-wrap > table th:first-child, .legacy .table-wrap > table td:first-child { @apply pl-5; }
+    .legacy .table-wrap > .pagination { @apply px-5 pb-4; }
+    .legacy .badge { @apply inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium whitespace-nowrap text-slate-700 ring-1 ring-slate-200 ring-inset; }
+    .legacy .badge.ok { @apply bg-success-50 text-success-700 ring-success-100; }
+    .legacy .badge.off { @apply bg-danger-50 text-danger-700 ring-danger-100; }
+    .legacy .badge.warn { @apply bg-warning-50 text-warning-700 ring-warning-100; }
+    .legacy .badge.info { @apply bg-brand-50 text-brand-700 ring-brand-100; }
+    .legacy .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line-strong bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-xs transition hover:bg-slate-50 hover:text-ink hover:no-underline; }
+    .legacy .btn.primary { @apply border-brand-600 bg-brand-600 text-white hover:bg-brand-700; }
+    .legacy .btn.danger { @apply border-danger-100 text-danger-600 hover:bg-danger-50; }
+    .legacy .btn.sm { @apply px-2 py-1 text-xs; }
+    .legacy .inline { @apply inline; }
+    .legacy .row { @apply flex flex-wrap items-center gap-2; }
+    .legacy label { @apply mt-4 mb-1.5 block text-sm font-medium text-slate-700; }
+    .legacy label.row { @apply flex; }
+    .legacy .hint { @apply text-xs font-normal text-ink-muted; }
+    .legacy select { @apply appearance-auto; }
+    .legacy textarea { @apply min-h-24 resize-y; }
+    .legacy input[type='checkbox'] { @apply size-4 rounded border-line-strong accent-brand-600; }
+    .legacy .filters input, .legacy .filters select { @apply w-auto; }
+    .legacy .flash { @apply mb-4 rounded-lg px-4 py-3 text-sm; }
+    .legacy .flash.success { @apply bg-success-50 text-success-700; }
+    .legacy .flash.error { @apply bg-danger-50 text-danger-700; }
+    .legacy .errors { @apply text-sm text-danger-600; }
+    .legacy .muted { @apply text-ink-muted; }
+    .legacy .mono { @apply font-mono text-xs [overflow-wrap:anywhere]; }
+    .legacy pre { @apply max-h-[70vh]; }
+    .legacy .thread { @apply flex flex-col gap-2.5; }
+    .legacy .msg { @apply max-w-[75%] rounded-2xl border border-line bg-slate-50 px-3.5 py-2 break-words whitespace-pre-wrap text-slate-800; }
+    .legacy .msg.in { @apply self-start rounded-bl-md; }
+    .legacy .msg.out { @apply self-end rounded-br-md border-brand-100 bg-brand-50; }
+    .legacy .msg.failed { @apply border-danger-100 bg-danger-50; }
+    .legacy .msg .meta { @apply mt-1 text-2xs whitespace-normal text-ink-muted; }
+    .legacy .two-col { @apply grid grid-cols-1 gap-5 min-[900px]:grid-cols-[2fr_1fr]; }
+}

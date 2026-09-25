@@ -1,0 +1,12 @@
+# Safety net for shared hosting when the document root is the app folder instead of public/:
+# route everything into public/ so .env, storage/ and the source code are never served.
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
