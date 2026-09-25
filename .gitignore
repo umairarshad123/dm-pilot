@@ -26,3 +26,4 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /.deploy-target
+/deploy-files
