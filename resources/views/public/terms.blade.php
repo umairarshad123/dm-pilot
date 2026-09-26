@@ -79,7 +79,7 @@
     <p>We may update these Terms. The effective date above shows the latest version. Continuing to use the Service after a change means you accept the updated Terms.</p>
 
     <h2 id="law">11. Governing law</h2>
-    <p>These Terms are governed by the laws of the State of Wyoming, United States, without regard to its conflict-of-law rules. {{ $operator }} is a limited liability company organized in Wyoming.</p>
+    <p>These Terms are governed by the laws of the United States and of the state in which {{ $operator }} is registered, without regard to conflict-of-law rules.</p>
 
     <h2 id="contact">12. Contact</h2>
     <p>Questions about these Terms: <a href="mailto:{{ $email }}">{{ $email }}</a>.</p>

@@ -26,7 +26,7 @@ One video per permission group. You can upload the **same video** to several per
 
 | # | Screen | Action | Caption |
 |---|---|---|---|
-| 1 | `https://bot.apexgrowthsolution.com/about` | Show the app description page, scroll to "Meta permissions we use". | *Apex Chat Bot answers Facebook Page and Instagram DMs for Apex Growth Systems LLC, with human takeover.* |
+| 1 | `https://bot.apexgrowthsolution.com/about` | Show the app description page, scroll to "Meta permissions we use". | *Apex Chat Bot answers Facebook Page and Instagram DMs for Apex Growth Solutions, with human takeover.* |
 | 2 | `https://bot.apexgrowthsolution.com/login` → dashboard | Log in as the admin. | *Business admin logs in to our dashboard.* |
 | 3 | Dashboard → **Meta accounts → Connect via token** | Show the page and its instructions. | *Admin connects a Facebook Page.* |
 | 4 | New tab: **Graph API Explorer** (developers.facebook.com/tools/explorer) | Select app **Apex Chat Bot**, *User Token*, tick `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement`, `pages_messaging` (+ IG permissions if recording one combined video). Click **Generate Access Token**. | *Admin grants the permissions to Apex Chat Bot using Facebook Login.* |

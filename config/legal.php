@@ -6,7 +6,7 @@
 */
 return [
     // The legal entity / business that operates the service (the "data controller").
-    'operator_name' => env('APP_OPERATOR_NAME', 'Apex Growth Systems LLC'),
+    'operator_name' => env('APP_OPERATOR_NAME', 'Apex Growth Solutions'),
 
     // Public contact for privacy and deletion requests. Must be a monitored mailbox.
     'contact_email' => env('APP_CONTACT_EMAIL', env('MAIL_FROM_ADDRESS', 'privacy@example.com')),
