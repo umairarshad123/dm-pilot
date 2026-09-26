@@ -4,7 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/admin');
+// Public home page = the About page (Meta domain verification scrapes the home page <head>).
+Route::get('/', [\App\Http\Controllers\Public\LegalPageController::class, 'about'])->name('home');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('login', [LoginController::class, 'show'])->name('login');

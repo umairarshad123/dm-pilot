@@ -37,9 +37,14 @@ class AuthTest extends TestCase
         $this->getJson('/admin/api/conversations')->assertUnauthorized();
     }
 
-    public function test_root_redirects_to_admin(): void
+    public function test_root_is_the_public_home_page_with_the_domain_verification_tag(): void
     {
-        $this->get('/')->assertRedirect('/admin');
+        config(['legal.facebook_domain_verification' => 'test-verification-code']);
+
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('<meta name="facebook-domain-verification" content="test-verification-code" />', false)
+            ->assertSee(route('login'), false);
     }
 
     public function test_login_page_renders(): void

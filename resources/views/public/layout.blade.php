@@ -17,6 +17,9 @@
     <title>@yield('title') · {{ $product }}</title>
     @include('partials.favicon')
     <meta name="description" content="@yield('description', $product.' by '.$operator.': automated and human replies to Facebook Messenger and Instagram direct messages.')">
+    @if (filled(config('legal.facebook_domain_verification')))
+    <meta name="facebook-domain-verification" content="{{ config('legal.facebook_domain_verification') }}" />
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
@@ -58,6 +61,7 @@
                 @foreach ($links as $name => $label)
                     <a href="{{ route($name) }}" class="hover:text-slate-800">{{ $label }}</a>
                 @endforeach
+                <a href="{{ route('login') }}" class="hover:text-slate-800">Team log in</a>
             </nav>
         </div>
     </footer>

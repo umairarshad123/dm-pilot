@@ -15,6 +15,9 @@ return [
     'operator_address' => env('APP_OPERATOR_ADDRESS'),
 
     // Product name shown to users and Meta reviewers (matches the Meta app name).
+    // Meta Business domain verification meta-tag content (Business settings → Domains).
+    'facebook_domain_verification' => env('FACEBOOK_DOMAIN_VERIFICATION', 'ixjba409vrj0av89j2nb4wdj5ivs0v'),
+
     'product_name' => env('APP_PRODUCT_NAME', 'Apex Chat Bot'),
 
     // Date shown as "Effective date" / "Last updated" on the legal pages (YYYY-MM-DD).
