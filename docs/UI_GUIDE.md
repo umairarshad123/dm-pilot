@@ -1,4 +1,4 @@
-# DM Pilot admin UI guide
+# Apex Chat Bot admin UI guide
 
 The contract for building admin pages. Live examples of every component: **GET /admin/_ui** (`admin.ui`, source `resources/views/admin/_ui.blade.php`). Copy from there.
 
@@ -29,7 +29,7 @@ Every admin page uses the `<x-layouts.app>` component (file: `resources/views/co
 
 | Prop / slot | Meaning |
 |---|---|
-| `title` | Top-bar `<h1>` and `<title>` (suffix "· DM Pilot"). |
+| `title` | Top-bar `<h1>` and `<title>` (suffix "· Apex Chat Bot"). |
 | `width` | `default` (max-w-7xl), `narrow` (max-w-3xl, forms), `wide` (max-w-[1600px]), `full` (edge to edge, fills the viewport below the top bar, no padding: use for split panes like Live Chat; make your own children scroll with `overflow-y-auto`). |
 | `actions` slot | Primary buttons in the top bar (they move to a second row on phones). |
 | `subnav` slot | Row under the top bar that stays sticky with it (link tabs, a filter strip). |

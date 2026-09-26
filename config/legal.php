@@ -15,7 +15,7 @@ return [
     'operator_address' => env('APP_OPERATOR_ADDRESS'),
 
     // Product name shown to users and Meta reviewers (matches the Meta app name).
-    'product_name' => env('APP_PRODUCT_NAME', 'Custom Bot Integration'),
+    'product_name' => env('APP_PRODUCT_NAME', 'Apex Chat Bot'),
 
     // Date shown as "Effective date" / "Last updated" on the legal pages (YYYY-MM-DD).
     'effective_date' => env('LEGAL_EFFECTIVE_DATE', '2026-09-26'),

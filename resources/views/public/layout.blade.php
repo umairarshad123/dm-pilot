@@ -15,6 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title') · {{ $product }}</title>
+    @include('partials.favicon')
     <meta name="description" content="@yield('description', $product.' by '.$operator.': automated and human replies to Facebook Messenger and Instagram direct messages.')">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -22,7 +23,7 @@
     <header class="border-b border-slate-200 bg-white">
         <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-4">
             <a href="{{ route('public.about') }}" class="flex items-center gap-2 font-semibold text-slate-900 no-underline">
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">{{ mb_substr($product, 0, 1) }}</span>
+                <img src="{{ asset('images/logo.png') }}" alt="" width="32" height="32" class="h-8 w-8 rounded-lg bg-white object-contain ring-1 ring-black/5">
                 <span>{{ $product }}</span>
             </a>
             <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Legal">

@@ -1,5 +1,5 @@
 /*
- | DM Pilot design system — Tailwind v4.
+ | Apex Chat Bot design system — Tailwind v4.
  | Tokens live in @theme (they become utilities: bg-brand-600, shadow-card, text-ink ...).
  | Reusable class recipes live in @layer components (ui-*). Blade components in
  | resources/views/components/ui/* use these; see docs/UI_GUIDE.md.

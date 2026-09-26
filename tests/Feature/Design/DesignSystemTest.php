@@ -51,7 +51,7 @@ class DesignSystemTest extends TestCase
             ->get(route($name))
             ->assertOk()
             ->assertSee('id="sidebar"', false)
-            ->assertSee('DM Pilot')
+            ->assertSee('Apex Chat Bot')
             ->assertSee('Live Chat')
             ->assertSee('Pages &amp; Channels', false)
             ->assertSee(route('admin.page-switch'), false)
@@ -192,7 +192,7 @@ class DesignSystemTest extends TestCase
             ->assertOk()
             ->assertSee('Log in')
             ->assertSee('Welcome back')
-            ->assertSee('DM Pilot')
+            ->assertSee('Apex Chat Bot')
             ->assertSee('name="email"', false)
             ->assertSee('name="password"', false);
     }
@@ -210,7 +210,7 @@ class DesignSystemTest extends TestCase
 
         $this->assertStringContainsString('<div class="legacy"><div class="card">Hello legacy</div>', $html);
         $this->assertStringContainsString('id="sidebar"', $html);
-        $this->assertStringContainsString('<title>Legacy page · DM Pilot</title>', $html);
+        $this->assertStringContainsString('<title>Legacy page · Apex Chat Bot</title>', $html);
         $this->assertStringContainsString('window.legacyPushed = true;', $html);
     }
 }

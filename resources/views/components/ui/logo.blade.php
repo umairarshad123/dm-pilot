@@ -1,7 +1,7 @@
 {{--
     Brand mark + wordmark. The product name lives in ONE place: App\Providers\ViewServiceProvider::BRAND (shared to views as $brand).
     <x-ui.logo />  <x-ui.logo :wordmark="false" size="lg" />  <x-ui.logo inverted />
-    Props: name (default "DM Pilot"), wordmark (bool), size (sm|md|lg), inverted (white text for dark backgrounds)
+    Props: name (default "Apex Chat Bot"), wordmark (bool), size (sm|md|lg), inverted (white text for dark backgrounds)
 --}}
 @props(['name' => \App\Providers\ViewServiceProvider::BRAND, 'wordmark' => true, 'size' => 'md', 'inverted' => false])
 
@@ -12,9 +12,9 @@
 @endphp
 
 <span {{ $attributes->class(['inline-flex items-center gap-2.5']) }}>
-    <span class="{{ $mark }} relative inline-flex shrink-0 items-center justify-center bg-gradient-to-br from-brand-500 via-brand-600 to-indigo-600 text-white shadow-[0_4px_12px_-2px_rgb(27_86_245/0.45)] ring-1 ring-white/20 ring-inset">
-        <x-ui.icon name="send" :class="$glyph.' -translate-x-px translate-y-px'" :stroke="2.25" />
-    </span>
+    <img src="{{ asset('images/logo.png') }}" alt="{{ $wordmark ? '' : $name }}" width="44" height="44"
+         class="{{ $mark }} shrink-0 bg-white object-contain shadow-[0_4px_12px_-4px_rgb(15_23_42/0.25)] ring-1 ring-black/5">
+
     @if ($wordmark)
         <span class="{{ $text }} font-semibold tracking-tight {{ $inverted ? 'text-white' : 'text-ink' }}">{{ $name }}</span>
     @endif

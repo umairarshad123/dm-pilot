@@ -3,7 +3,7 @@
     <div class="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-gradient-to-br from-brand-200/60 to-violet-200/40 blur-3xl" aria-hidden="true"></div>
     <div class="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-center">
         <div>
-            <x-ui.badge tone="brand" icon="sparkles">Welcome to {{ $brand ?? 'DM Pilot' }}</x-ui.badge>
+            <x-ui.badge tone="brand" icon="sparkles">Welcome to {{ $brand ?? 'Apex Chat Bot' }}</x-ui.badge>
             <h3 class="mt-4 text-xl font-semibold tracking-tight text-ink sm:text-2xl">Put your DMs on autopilot</h3>
             <p class="mt-2 max-w-xl text-[14px] text-slate-600">Connect a Facebook Page or Instagram professional account and your AI assistant will answer customers 24/7, capture leads and hand off to your team when it matters.</p>
             <div class="mt-6 flex flex-wrap gap-2">

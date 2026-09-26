@@ -82,7 +82,7 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#ffffff">
     <title>{{ $title ? $title.' · ' : '' }}{{ $brand }}</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233375ff'/%3E%3Cstop offset='1' stop-color='%234f46e5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M19.4 23.5a.6.6 0 0 0 1.1 0l4.4-13a.6.6 0 0 0-.8-.8l-13 4.4a.6.6 0 0 0 0 1.1l5.4 2.2a1.4 1.4 0 0 1 .8.8z' fill='white'/%3E%3C/svg%3E">
+    @include('partials.favicon')
     @fonts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')

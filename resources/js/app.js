@@ -1,5 +1,5 @@
 /*
- | DM Pilot admin — JS entry.
+ | Apex Chat Bot admin — JS entry.
  | Alpine.js (+ focus, collapse) powers every interactive Blade component in
  | resources/views/components/ui. Keep page-specific behaviour in x-data blocks
  | inside the page's Blade view (see docs/UI_GUIDE.md "JSON polling pattern").

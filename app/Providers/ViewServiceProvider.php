@@ -12,7 +12,7 @@ use Throwable;
 class ViewServiceProvider extends ServiceProvider
 {
     /** Product name shown in the sidebar, login page and <title>. Change it here only. */
-    public const BRAND = 'DM Pilot';
+    public const BRAND = 'Apex Chat Bot';
 
     public function register(): void
     {

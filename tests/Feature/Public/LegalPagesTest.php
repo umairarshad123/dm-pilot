@@ -32,7 +32,7 @@ class LegalPagesTest extends TestCase
             ]],
             'terms' => ['/terms', ['Terms of Service', 'Acceptable use', 'Meta Platform Terms', 'Limitation of liability']],
             'data deletion' => ['/data-deletion', ['Data Deletion Instructions', 'Delete my data', 'Apps and websites', 'confirmation code']],
-            'about' => ['/about', ['Custom Bot Integration', 'pages_messaging', 'instagram_manage_messages', 'Human handover']],
+            'about' => ['/about', ['Apex Chat Bot', 'pages_messaging', 'instagram_manage_messages', 'Human handover']],
         ];
     }
 
