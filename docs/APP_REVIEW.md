@@ -7,7 +7,7 @@ Placeholders used below:
 | Placeholder | Value now (testing) | Replace with |
 |---|---|---|
 | `https://bot.apexgrowthsolution.com` | `https://myrtle-parsable-amusively.ngrok-free.dev` | your production domain, e.g. `https://bot.apexgrowthsolutions.com` |
-| `Apex Growth Solutions` | `APP_OPERATOR_NAME` (default *Apex Growth Solutions*) | legal/business name exactly as on your Business Verification documents |
+| `Apex Growth Systems LLC` | `APP_OPERATOR_NAME` (default *Apex Growth Systems LLC*) | legal/business name exactly as on your Business Verification documents |
 | `support@bot.apexgrowthsolution.com` | `APP_CONTACT_EMAIL` | a monitored mailbox on your own domain (not a personal Gmail if you can avoid it) |
 | `{PAGE}` | – | the test Facebook Page name + URL, e.g. `facebook.com/YourPage` |
 | `{IG}` | – | the test Instagram professional account handle, e.g. `@yourbrand` |
@@ -25,7 +25,7 @@ Meta has two access levels per permission:
 
 | Your situation | Path | What to do |
 |---|---|---|
-| You only connect Pages/IG accounts **owned by your own business portfolio** (e.g. Apex Growth Solutions' and Digi Risers' own Pages, if both are in *your* Business portfolio and you are admin) | **A: own business** | Complete App settings (section 1), Business Verification (section 2), Data handling (section 3), then **Publish**. Skip section 4. Keep this document ready in case the dashboard still asks for review. |
+| You only connect Pages/IG accounts **owned by your own business portfolio** (e.g. Apex Growth Systems LLC' and Digi Risers' own Pages, if both are in *your* Business portfolio and you are admin) | **A: own business** | Complete App settings (section 1), Business Verification (section 2), Data handling (section 3), then **Publish**. Skip section 4. Keep this document ready in case the dashboard still asks for review. |
 | You connect **clients' Pages** (agency work, Pages owned by other businesses/people) | **B: Tech Provider** | Everything in this document, including App Review with Advanced Access for each permission (section 4). |
 
 If you are unsure, go with **Path B**: it is the only one that is guaranteed to keep working for client Pages, and the package below is already written for it.
@@ -89,7 +89,7 @@ php artisan tinker
 
 Needed for Path B (Advanced Access) and, per Meta's Messenger docs, to receive messages from people who don't have a role on the app.
 
-1. **App settings → Basic → Business portfolio / "Verification"**: connect the app to your Business portfolio (business.facebook.com) for `Apex Growth Solutions`.
+1. **App settings → Basic → Business portfolio / "Verification"**: connect the app to your Business portfolio (business.facebook.com) for `Apex Growth Systems LLC`.
 2. In **Meta Business Suite → Settings → Business info → Business verification**: *Start verification*.
 3. Provide: legal business name (must match documents exactly), address, phone, website (a real website on a domain you control, whose footer shows the same business name; the `https://bot.apexgrowthsolution.com/about` page helps if it's on your domain), and one official document (business registration/incorporation certificate, tax registration, or utility bill in the business's name).
 4. Verify by email on the website's domain, phone, or domain DNS/meta-tag. Verification typically takes from a few hours to a few days.
@@ -105,7 +105,7 @@ Shown under **App Review → Requests** or the **Publish** checklist, and yearly
 |---|---|
 | Do you have data processors or service providers with access to Platform Data? | **Yes** |
 | List them | `OpenAI, L.L.C. (AI reply generation)`; `Anthropic, PBC (AI reply generation)`; `<your hosting provider, e.g. Hetzner / DigitalOcean / AWS> (hosting & database)` |
-| Who is the responsible entity for Platform Data? | `Apex Growth Solutions` |
+| Who is the responsible entity for Platform Data? | `Apex Growth Systems LLC` |
 | Country of the responsible entity | your country of registration |
 | Have you provided personal data to public authorities in response to national security requests in the past 12 months? | **No** (answer truthfully) |
 | Policies/processes for such requests | Tick: *Required review of the legality of these requests*, *Provisions for challenging these requests*, *Data minimization policy*, *Documentation of these requests* (only tick what you actually commit to) |
@@ -145,11 +145,11 @@ Go to **App Review → Permissions and Features** (or **Use cases → Customize 
 
 ### Paste-ready "How will your app use this permission?" texts
 
-Use these as-is (replace `Apex Growth Solutions`), and in the *"Please provide step-by-step instructions"* field paste the **Reviewer test instructions** from section 5.
+Use these as-is (replace `Apex Growth Systems LLC`), and in the *"Please provide step-by-step instructions"* field paste the **Reviewer test instructions** from section 5.
 
 #### `pages_messaging`
 ```
-Apex Growth Solutions uses Apex Chat Bot to answer customer direct messages sent to Facebook Pages it manages. When a person starts a conversation with the Page in Messenger, our webhook receives the message and our app replies automatically with a short, helpful answer generated from business information the Page owner provides (services, hours, pricing ranges, next steps). All conversations appear in our private team dashboard, where a human agent can take over at any time and reply personally; when a human replies, the automated assistant pauses in that conversation. We only respond to conversations initiated by the user and only within Messenger's 24-hour standard messaging window; we do not send promotional or unsolicited messages and do not use message tags. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
+Apex Growth Systems LLC uses Apex Chat Bot to answer customer direct messages sent to Facebook Pages it manages. When a person starts a conversation with the Page in Messenger, our webhook receives the message and our app replies automatically with a short, helpful answer generated from business information the Page owner provides (services, hours, pricing ranges, next steps). All conversations appear in our private team dashboard, where a human agent can take over at any time and reply personally; when a human replies, the automated assistant pauses in that conversation. We only respond to conversations initiated by the user and only within Messenger's 24-hour standard messaging window; we do not send promotional or unsolicited messages and do not use message tags. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
 ```
 
 #### `pages_manage_metadata`
@@ -174,7 +174,7 @@ Apex Chat Bot uses instagram_basic to read the ID and username of the Instagram 
 
 #### `instagram_manage_messages`
 ```
-Apex Growth Solutions uses Apex Chat Bot to answer Instagram Direct messages sent to the Instagram professional accounts of the businesses it manages. When a person sends a DM to the business account, our webhook receives it and the app replies automatically with a short answer based on business information provided by the account owner. All conversations are shown in our private team dashboard, where a human agent can take over and reply personally at any time; the automated assistant then pauses. We only reply to conversations the user started and only within Instagram's 24-hour messaging window; we never send unsolicited or promotional messages. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
+Apex Growth Systems LLC uses Apex Chat Bot to answer Instagram Direct messages sent to the Instagram professional accounts of the businesses it manages. When a person sends a DM to the business account, our webhook receives it and the app replies automatically with a short answer based on business information provided by the account owner. All conversations are shown in our private team dashboard, where a human agent can take over and reply personally at any time; the automated assistant then pauses. We only reply to conversations the user started and only within Instagram's 24-hour messaging window; we never send unsolicited or promotional messages. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
 ```
 
 #### `business_management` (only if you keep it)
@@ -197,7 +197,7 @@ instagram_business_manage_messages: Used to receive Instagram Direct messages se
 Apex Chat Bot is a server-side messaging assistant for Facebook Pages and Instagram professional accounts. Reviewers do not need to log in to anything to see it working: the experience happens inside Messenger and Instagram.
 
 TEST THE MESSENGER BOT (pages_messaging, pages_manage_metadata, pages_read_engagement, pages_show_list):
-1. Log in to Facebook with your reviewer account and open our test Page: https://www.facebook.com/1176050658933274 (Apex Growth Solutions)
+1. Log in to Facebook with your reviewer account and open our test Page: https://www.facebook.com/1176050658933274 (Apex Growth Solutions Page)
 2. Click "Message" and send: "Hi, what services do you offer?"
 3. Within ~10 seconds you will receive an automatic reply from the Page describing the services.
 4. Send: "Can I speak to a person?" The reply confirms a team member will follow up. Our team sees the conversation in our dashboard and can reply manually; the assistant then pauses for that conversation (shown in the screencast).
