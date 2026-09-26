@@ -197,7 +197,7 @@ instagram_business_manage_messages: Used to receive Instagram Direct messages se
 Apex Chat Bot is a server-side messaging assistant for Facebook Pages and Instagram professional accounts. Reviewers do not need to log in to anything to see it working: the experience happens inside Messenger and Instagram.
 
 TEST THE MESSENGER BOT (pages_messaging, pages_manage_metadata, pages_read_engagement, pages_show_list):
-1. Log in to Facebook with your reviewer account and open our test Page: {PAGE URL}
+1. Log in to Facebook with your reviewer account and open our test Page: https://www.facebook.com/1176050658933274 (Apex Growth Solutions)
 2. Click "Message" and send: "Hi, what services do you offer?"
 3. Within ~10 seconds you will receive an automatic reply from the Page describing the services.
 4. Send: "Can I speak to a person?" The reply confirms a team member will follow up. Our team sees the conversation in our dashboard and can reply manually; the assistant then pauses for that conversation (shown in the screencast).
