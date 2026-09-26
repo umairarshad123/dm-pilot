@@ -26,10 +26,10 @@ One video per permission group. You can upload the **same video** to several per
 
 | # | Screen | Action | Caption |
 |---|---|---|---|
-| 1 | `{BASE}/about` | Show the app description page, scroll to "Meta permissions we use". | *Custom Bot Integration answers Facebook Page and Instagram DMs for {OPERATOR}, with human takeover.* |
-| 2 | `{BASE}/login` → dashboard | Log in as the admin. | *Business admin logs in to our dashboard.* |
+| 1 | `https://bot.apexgrowthsolution.com/about` | Show the app description page, scroll to "Meta permissions we use". | *Apex Chat Bot answers Facebook Page and Instagram DMs for Apex Growth Solutions, with human takeover.* |
+| 2 | `https://bot.apexgrowthsolution.com/login` → dashboard | Log in as the admin. | *Business admin logs in to our dashboard.* |
 | 3 | Dashboard → **Meta accounts → Connect via token** | Show the page and its instructions. | *Admin connects a Facebook Page.* |
-| 4 | New tab: **Graph API Explorer** (developers.facebook.com/tools/explorer) | Select app **Custom Bot Integration**, *User Token*, tick `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement`, `pages_messaging` (+ IG permissions if recording one combined video). Click **Generate Access Token**. | *Admin grants the permissions to Custom Bot Integration using Facebook Login.* |
+| 4 | New tab: **Graph API Explorer** (developers.facebook.com/tools/explorer) | Select app **Apex Chat Bot**, *User Token*, tick `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement`, `pages_messaging` (+ IG permissions if recording one combined video). Click **Generate Access Token**. | *Admin grants the permissions to Apex Chat Bot using Facebook Login.* |
 | 5 | **Facebook Login dialog** | Pause on the dialog showing the app name and the permission list. Click *Continue*, select the Page (and IG account), *Save*. | *pages_show_list, pages_manage_metadata, pages_read_engagement and pages_messaging are requested here.* |
 | 6 | Explorer | Copy the token (**blur it in editing**). | *The user token is pasted into our dashboard (never shared elsewhere).* |
 | 7 | Dashboard → Connect via token | Paste, click **Fetch Pages**. The list of managed Pages appears. | ***pages_show_list**: we list the Pages this admin manages.* |
@@ -42,7 +42,7 @@ One video per permission group. You can upload the **same video** to several per
 | 14 | Right browser | Show the human reply arriving in Messenger. | *The customer receives the human reply in Messenger.* |
 | 15 | Left: conversation page | Show the "Bot paused until …" / *Human takeover* badge. | *The assistant pauses automatically after a human reply.* |
 | 16 | Right browser | Customer sends "Great, thanks!" and **no bot reply** comes. Left: message shows as received, no bot reply. | *While paused, only humans answer.* |
-| 17 | Left | Click **Clear pause** (optional) and show bot active again. End on `{BASE}/privacy`. | *Admins control the assistant. Privacy policy: {BASE}/privacy* |
+| 17 | Left | Click **Clear pause** (optional) and show bot active again. End on `https://bot.apexgrowthsolution.com/privacy`. | *Admins control the assistant. Privacy policy: https://bot.apexgrowthsolution.com/privacy* |
 
 `business_management` (only if requested): in step 7 add a caption *"Our Pages are owned by a Business portfolio; business_management lets /me/accounts return them"*, and show that the Page listed belongs to the portfolio (Business Suite → Settings → Pages).
 
@@ -52,7 +52,7 @@ One video per permission group. You can upload the **same video** to several per
 
 | # | Screen | Action | Caption |
 |---|---|---|---|
-| 1 | Graph API Explorer → Facebook Login dialog | Generate a token for **Custom Bot Integration** with `instagram_basic`, `instagram_manage_messages` (+ `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement`). Pause on the dialog; select the Page **and** the Instagram account. | *Admin grants instagram_basic and instagram_manage_messages to Custom Bot Integration.* |
+| 1 | Graph API Explorer → Facebook Login dialog | Generate a token for **Apex Chat Bot** with `instagram_basic`, `instagram_manage_messages` (+ `pages_show_list`, `pages_manage_metadata`, `pages_read_engagement`). Pause on the dialog; select the Page **and** the Instagram account. | *Admin grants instagram_basic and instagram_manage_messages to Apex Chat Bot.* |
 | 2 | Dashboard → Connect via token → **Fetch Pages** | Show the Page row with its linked Instagram username. | ***instagram_basic**: we read the linked Instagram professional account's ID and username.* |
 | 3 | **Save accounts** → Meta accounts list | Show the Instagram account row (platform Instagram, @username) and **Test connection**. | *The Instagram account is connected and subscribed to DM webhooks.* |
 | 4 | Phone mirror or instagram.com in the right browser as the customer | Open {IG}, tap **Message**, send "Hi, are you open on Saturday?" | *A customer sends a DM to the business on Instagram.* |
@@ -68,7 +68,7 @@ Note: Instagram webhooks for people without an app role only arrive once the app
 
 ## Video C: Instagram Login variant (only if requesting `instagram_business_*`)
 
-Same as Video B, but step 1 is the **Instagram** login screen (Business login for Instagram) showing *Custom Bot Integration* and the permissions `instagram_business_basic` and `instagram_business_manage_messages`, and step 2 shows the account connected with auth type *Instagram Login*. Captions name the `instagram_business_*` permissions instead.
+Same as Video B, but step 1 is the **Instagram** login screen (Business login for Instagram) showing *Apex Chat Bot* and the permissions `instagram_business_basic` and `instagram_business_manage_messages`, and step 2 shows the account connected with auth type *Instagram Login*. Captions name the `instagram_business_*` permissions instead.
 
 ---
 

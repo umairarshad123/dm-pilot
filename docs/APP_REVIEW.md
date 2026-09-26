@@ -1,14 +1,14 @@
 # Meta App Review: submission package
 
-App: **Custom Bot Integration**, App ID `1829538868411022`, currently **Unpublished**. Use cases added: **Messenger** ("Engage with customers on Messenger from Meta") and **Instagram** ("Manage messaging & content on Instagram", Instagram API setup).
+App: **Apex Chat Bot**, App ID `1829538868411022`, currently **Unpublished**. Use cases added: **Messenger** ("Engage with customers on Messenger from Meta") and **Instagram** ("Manage messaging & content on Instagram", Instagram API setup).
 
 Placeholders used below:
 
 | Placeholder | Value now (testing) | Replace with |
 |---|---|---|
-| `{BASE}` | `https://myrtle-parsable-amusively.ngrok-free.dev` | your production domain, e.g. `https://bot.apexgrowthsolutions.com` |
-| `{OPERATOR}` | `APP_OPERATOR_NAME` (default *Apex Growth Solutions*) | legal/business name exactly as on your Business Verification documents |
-| `{EMAIL}` | `APP_CONTACT_EMAIL` | a monitored mailbox on your own domain (not a personal Gmail if you can avoid it) |
+| `https://bot.apexgrowthsolution.com` | `https://myrtle-parsable-amusively.ngrok-free.dev` | your production domain, e.g. `https://bot.apexgrowthsolutions.com` |
+| `Apex Growth Solutions` | `APP_OPERATOR_NAME` (default *Apex Growth Solutions*) | legal/business name exactly as on your Business Verification documents |
+| `support@bot.apexgrowthsolution.com` | `APP_CONTACT_EMAIL` | a monitored mailbox on your own domain (not a personal Gmail if you can avoid it) |
 | `{PAGE}` | – | the test Facebook Page name + URL, e.g. `facebook.com/YourPage` |
 | `{IG}` | – | the test Instagram professional account handle, e.g. `@yourbrand` |
 
@@ -34,20 +34,20 @@ If you are unsure, go with **Path B**: it is the only one that is guaranteed to 
 
 ## 1. App settings → Basic (dashboard order)
 
-Open **developers.facebook.com → My Apps → Custom Bot Integration → App settings → Basic**.
+Open **developers.facebook.com → My Apps → Apex Chat Bot → App settings → Basic**.
 
 | Field | Value |
 |---|---|
-| Display name | `Custom Bot Integration` (must not contain "Facebook", "Messenger", "Instagram", "Meta") |
+| Display name | `Apex Chat Bot` (must not contain "Facebook", "Messenger", "Instagram", "Meta") |
 | App domains | `myrtle-parsable-amusively.ngrok-free.dev` now, your production domain later (no `https://`) |
-| Contact email | `{EMAIL}` (Meta sends review results and policy notices here) |
-| Privacy Policy URL | `{BASE}/privacy` |
-| Terms of Service URL | `{BASE}/terms` |
-| User data deletion | Choose **Data deletion callback URL** → `{BASE}/meta/data-deletion`. (Alternative accepted by Meta: *Data deletion instructions URL* → `{BASE}/data-deletion`. The callback is preferred; the instructions page is linked from the Privacy Policy either way.) |
+| Contact email | `support@bot.apexgrowthsolution.com` (Meta sends review results and policy notices here) |
+| Privacy Policy URL | `https://bot.apexgrowthsolution.com/privacy` |
+| Terms of Service URL | `https://bot.apexgrowthsolution.com/terms` |
+| User data deletion | Choose **Data deletion callback URL** → `https://bot.apexgrowthsolution.com/meta/data-deletion`. (Alternative accepted by Meta: *Data deletion instructions URL* → `https://bot.apexgrowthsolution.com/data-deletion`. The callback is preferred; the instructions page is linked from the Privacy Policy either way.) |
 | App icon | 1024 × 1024 PNG/JPG, no Meta logos, not a blank/default image |
 | Category | **Business and pages** (or *Messaging* if offered) |
 | Business use (if asked) | "Support my own business" (Path A) or "Provide services to other businesses" (Path B) |
-| Website platform (`+ Add platform → Website`) | Site URL `{BASE}/about` |
+| Website platform (`+ Add platform → Website`) | Site URL `https://bot.apexgrowthsolution.com/about` |
 
 Click **Save changes**. Meta crawls the Privacy/Terms URLs: they must load publicly over HTTPS with no login, no ngrok interstitial and no 4xx/5xx. Test them in a private browser window first.
 
@@ -59,16 +59,16 @@ If **Facebook Login for Business** (or *Facebook Login*) appears under **Use cas
 
 | Field | Value |
 |---|---|
-| Deauthorize callback URL | `{BASE}/meta/deauthorize` |
-| Data Deletion Request URL (if shown here too) | `{BASE}/meta/data-deletion` |
+| Deauthorize callback URL | `https://bot.apexgrowthsolution.com/meta/deauthorize` |
+| Data Deletion Request URL (if shown here too) | `https://bot.apexgrowthsolution.com/meta/data-deletion` |
 | Valid OAuth Redirect URIs | only needed if you later add a "Continue with Facebook" button |
 
 If the product isn't there, skip this; the Basic-settings data deletion field is what's required.
 
 ### What the callbacks do (for your own understanding)
 
-- `POST {BASE}/meta/data-deletion`: Meta sends `signed_request` (HMAC-SHA256 with your App Secret). We verify it, delete conversations/messages/raw webhook events whose ID matches the `user_id`, store an audit row (`data_deletion_requests`), and return `{"url": "{BASE}/meta/data-deletion/<CODE>", "confirmation_code": "<CODE>"}`. The URL is a public status page.
-- `POST {BASE}/meta/deauthorize`: verifies `signed_request`, logs it, deactivates any connected account whose `settings` record that user's ID, and stores an audit row.
+- `POST https://bot.apexgrowthsolution.com/meta/data-deletion`: Meta sends `signed_request` (HMAC-SHA256 with your App Secret). We verify it, delete conversations/messages/raw webhook events whose ID matches the `user_id`, store an audit row (`data_deletion_requests`), and return `{"url": "https://bot.apexgrowthsolution.com/meta/data-deletion/<CODE>", "confirmation_code": "<CODE>"}`. The URL is a public status page.
+- `POST https://bot.apexgrowthsolution.com/meta/deauthorize`: verifies `signed_request`, logs it, deactivates any connected account whose `settings` record that user's ID, and stores an audit row.
 - **Limitation (documented on the public pages too):** the `user_id` Meta sends is the *app-scoped user ID* of the Facebook user who logged in to our app (in practice: the Page admin). It is **not** the PSID/IGSID of the customers who DM your Page, and Meta provides no mapping between them. DM customers therefore request deletion by messaging "Delete my data" or by email, and a team member deletes the conversation. Until the dashboard has a delete button, you can do it with:
   ```
   php artisan tinker
@@ -80,7 +80,7 @@ Quick self-test (after deploying, replace the secret):
 ```
 php artisan tinker
 >>> (new App\Services\Meta\SignedRequest())->make(['user_id' => '123'])
-# then: curl -X POST {BASE}/meta/data-deletion -d "signed_request=<value>"
+# then: curl -X POST https://bot.apexgrowthsolution.com/meta/data-deletion -d "signed_request=<value>"
 ```
 
 ---
@@ -89,9 +89,9 @@ php artisan tinker
 
 Needed for Path B (Advanced Access) and, per Meta's Messenger docs, to receive messages from people who don't have a role on the app.
 
-1. **App settings → Basic → Business portfolio / "Verification"**: connect the app to your Business portfolio (business.facebook.com) for `{OPERATOR}`.
+1. **App settings → Basic → Business portfolio / "Verification"**: connect the app to your Business portfolio (business.facebook.com) for `Apex Growth Solutions`.
 2. In **Meta Business Suite → Settings → Business info → Business verification**: *Start verification*.
-3. Provide: legal business name (must match documents exactly), address, phone, website (a real website on a domain you control, whose footer shows the same business name; the `{BASE}/about` page helps if it's on your domain), and one official document (business registration/incorporation certificate, tax registration, or utility bill in the business's name).
+3. Provide: legal business name (must match documents exactly), address, phone, website (a real website on a domain you control, whose footer shows the same business name; the `https://bot.apexgrowthsolution.com/about` page helps if it's on your domain), and one official document (business registration/incorporation certificate, tax registration, or utility bill in the business's name).
 4. Verify by email on the website's domain, phone, or domain DNS/meta-tag. Verification typically takes from a few hours to a few days.
 5. If the dashboard prompts **"Become a Tech Provider"** (Path B), follow it: it is a short form under **App Review → Requests / Tech Provider verification** that confirms the business will serve other businesses.
 
@@ -105,7 +105,7 @@ Shown under **App Review → Requests** or the **Publish** checklist, and yearly
 |---|---|
 | Do you have data processors or service providers with access to Platform Data? | **Yes** |
 | List them | `OpenAI, L.L.C. (AI reply generation)`; `Anthropic, PBC (AI reply generation)`; `<your hosting provider, e.g. Hetzner / DigitalOcean / AWS> (hosting & database)` |
-| Who is the responsible entity for Platform Data? | `{OPERATOR}` |
+| Who is the responsible entity for Platform Data? | `Apex Growth Solutions` |
 | Country of the responsible entity | your country of registration |
 | Have you provided personal data to public authorities in response to national security requests in the past 12 months? | **No** (answer truthfully) |
 | Policies/processes for such requests | Tick: *Required review of the legality of these requests*, *Provisions for challenging these requests*, *Data minimization policy*, *Documentation of these requests* (only tick what you actually commit to) |
@@ -145,46 +145,46 @@ Go to **App Review → Permissions and Features** (or **Use cases → Customize 
 
 ### Paste-ready "How will your app use this permission?" texts
 
-Use these as-is (replace `{OPERATOR}`), and in the *"Please provide step-by-step instructions"* field paste the **Reviewer test instructions** from section 5.
+Use these as-is (replace `Apex Growth Solutions`), and in the *"Please provide step-by-step instructions"* field paste the **Reviewer test instructions** from section 5.
 
 #### `pages_messaging`
 ```
-{OPERATOR} uses Custom Bot Integration to answer customer direct messages sent to Facebook Pages it manages. When a person starts a conversation with the Page in Messenger, our webhook receives the message and our app replies automatically with a short, helpful answer generated from business information the Page owner provides (services, hours, pricing ranges, next steps). All conversations appear in our private team dashboard, where a human agent can take over at any time and reply personally; when a human replies, the automated assistant pauses in that conversation. We only respond to conversations initiated by the user and only within Messenger's 24-hour standard messaging window; we do not send promotional or unsolicited messages and do not use message tags. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
+Apex Growth Solutions uses Apex Chat Bot to answer customer direct messages sent to Facebook Pages it manages. When a person starts a conversation with the Page in Messenger, our webhook receives the message and our app replies automatically with a short, helpful answer generated from business information the Page owner provides (services, hours, pricing ranges, next steps). All conversations appear in our private team dashboard, where a human agent can take over at any time and reply personally; when a human replies, the automated assistant pauses in that conversation. We only respond to conversations initiated by the user and only within Messenger's 24-hour standard messaging window; we do not send promotional or unsolicited messages and do not use message tags. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
 ```
 
 #### `pages_manage_metadata`
 ```
-Custom Bot Integration uses pages_manage_metadata to subscribe each connected Facebook Page to our app's webhooks (POST /{page-id}/subscribed_apps with the messages, messaging_postbacks and message_echoes fields). Without this subscription we cannot receive the messages customers send to the Page, so the automated replies and the human-agent inbox would not work. The Page admin connects their Page in our dashboard, and the app subscribes it automatically; the same permission is used to set the Page's Messenger welcome settings (greeting text and ice breakers) that the admin configures in our dashboard. We do not change any other Page settings.
+Apex Chat Bot uses pages_manage_metadata to subscribe each connected Facebook Page to our app's webhooks (POST /{page-id}/subscribed_apps with the messages, messaging_postbacks and message_echoes fields). Without this subscription we cannot receive the messages customers send to the Page, so the automated replies and the human-agent inbox would not work. The Page admin connects their Page in our dashboard, and the app subscribes it automatically; the same permission is used to set the Page's Messenger welcome settings (greeting text and ice breakers) that the admin configures in our dashboard. We do not change any other Page settings.
 ```
 
 #### `pages_read_engagement`
 ```
-Custom Bot Integration uses pages_read_engagement to read basic metadata of the Facebook Pages a business connects (Page name and ID) so the admin can identify each Page in our dashboard, and to read the name and profile picture of people who message the Page so conversations are labelled with the customer's name for the human agents handling them. We do not read or store Page posts, comments, followers lists or insights.
+Apex Chat Bot uses pages_read_engagement to read basic metadata of the Facebook Pages a business connects (Page name and ID) so the admin can identify each Page in our dashboard, and to read the name and profile picture of people who message the Page so conversations are labelled with the customer's name for the human agents handling them. We do not read or store Page posts, comments, followers lists or insights.
 ```
 
 #### `pages_show_list`
 ```
-When a business admin connects their account in our dashboard, Custom Bot Integration calls /me/accounts to show the list of Facebook Pages they manage (with each Page's linked Instagram professional account) so they can choose which Pages the messaging assistant should answer. It is also used to verify that the person actually manages the Page before it is connected. The list is shown only to the admin during setup; we store only the Pages the admin selects.
+When a business admin connects their account in our dashboard, Apex Chat Bot calls /me/accounts to show the list of Facebook Pages they manage (with each Page's linked Instagram professional account) so they can choose which Pages the messaging assistant should answer. It is also used to verify that the person actually manages the Page before it is connected. The list is shown only to the admin during setup; we store only the Pages the admin selects.
 ```
 
 #### `instagram_basic`
 ```
-Custom Bot Integration uses instagram_basic to read the ID and username of the Instagram professional account linked to each connected Facebook Page. We need the account ID to match incoming Instagram Direct message webhooks to the correct business, and the username so the admin can see which Instagram account is connected in our dashboard. We do not read or store the account's media, followers or insights.
+Apex Chat Bot uses instagram_basic to read the ID and username of the Instagram professional account linked to each connected Facebook Page. We need the account ID to match incoming Instagram Direct message webhooks to the correct business, and the username so the admin can see which Instagram account is connected in our dashboard. We do not read or store the account's media, followers or insights.
 ```
 
 #### `instagram_manage_messages`
 ```
-{OPERATOR} uses Custom Bot Integration to answer Instagram Direct messages sent to the Instagram professional accounts of the businesses it manages. When a person sends a DM to the business account, our webhook receives it and the app replies automatically with a short answer based on business information provided by the account owner. All conversations are shown in our private team dashboard, where a human agent can take over and reply personally at any time; the automated assistant then pauses. We only reply to conversations the user started and only within Instagram's 24-hour messaging window; we never send unsolicited or promotional messages. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
+Apex Growth Solutions uses Apex Chat Bot to answer Instagram Direct messages sent to the Instagram professional accounts of the businesses it manages. When a person sends a DM to the business account, our webhook receives it and the app replies automatically with a short answer based on business information provided by the account owner. All conversations are shown in our private team dashboard, where a human agent can take over and reply personally at any time; the automated assistant then pauses. We only reply to conversations the user started and only within Instagram's 24-hour messaging window; we never send unsolicited or promotional messages. Message data is used only to reply to the customer and manage their enquiry, and is never sold or used for advertising.
 ```
 
 #### `business_management` (only if you keep it)
 ```
-Our Pages and Instagram professional accounts are owned by a Meta Business portfolio, and the admin's access to them is granted through that portfolio. Custom Bot Integration needs business_management only so that /me/accounts returns the portfolio-owned Pages the admin is allowed to manage, allowing them to connect those Pages to the messaging assistant. We do not create, modify or claim any business assets, ad accounts or users, and we do not call any other Business Manager API.
+Our Pages and Instagram professional accounts are owned by a Meta Business portfolio, and the admin's access to them is granted through that portfolio. Apex Chat Bot needs business_management only so that /me/accounts returns the portfolio-owned Pages the admin is allowed to manage, allowing them to connect those Pages to the messaging assistant. We do not create, modify or claim any business assets, ad accounts or users, and we do not call any other Business Manager API.
 ```
 
 #### `instagram_business_basic` / `instagram_business_manage_messages` (Instagram Login path only)
 ```
-instagram_business_basic: Custom Bot Integration uses this permission after the business logs in with Instagram to read the professional account's ID and username, so incoming Direct message webhooks can be matched to the right business and the admin can see which account is connected. We do not read media or insights.
+instagram_business_basic: Apex Chat Bot uses this permission after the business logs in with Instagram to read the professional account's ID and username, so incoming Direct message webhooks can be matched to the right business and the admin can see which account is connected. We do not read media or insights.
 
 instagram_business_manage_messages: Used to receive Instagram Direct messages sent to the connected professional account and to reply to them, automatically with a short AI-generated answer based on the business's information or manually by a human agent from our dashboard (the assistant pauses when a human replies). We only reply to user-initiated conversations within the 24-hour messaging window and never send unsolicited or promotional messages.
 ```
@@ -194,7 +194,7 @@ instagram_business_manage_messages: Used to receive Instagram Direct messages se
 ## 5. Reviewer test instructions (paste into every permission request)
 
 ```
-Custom Bot Integration is a server-side messaging assistant for Facebook Pages and Instagram professional accounts. Reviewers do not need to log in to anything to see it working: the experience happens inside Messenger and Instagram.
+Apex Chat Bot is a server-side messaging assistant for Facebook Pages and Instagram professional accounts. Reviewers do not need to log in to anything to see it working: the experience happens inside Messenger and Instagram.
 
 TEST THE MESSENGER BOT (pages_messaging, pages_manage_metadata, pages_read_engagement, pages_show_list):
 1. Log in to Facebook with your reviewer account and open our test Page: {PAGE URL}
@@ -209,15 +209,15 @@ TEST THE INSTAGRAM BOT (instagram_basic, instagram_manage_messages):
 
 The screencasts show the admin side: granting the permissions with Facebook Login, selecting the Page in our dashboard, the webhook subscription, the automatic reply, a human agent replying from our dashboard, and the assistant pausing.
 
-If a reply does not arrive, please retry once after a minute; our service is monitored 24/7 during review. Contact: {EMAIL}
-Privacy Policy: {BASE}/privacy  Terms: {BASE}/terms  Data deletion: {BASE}/data-deletion
+If a reply does not arrive, please retry once after a minute; our service is monitored 24/7 during review. Contact: support@bot.apexgrowthsolution.com
+Privacy Policy: https://bot.apexgrowthsolution.com/privacy  Terms: https://bot.apexgrowthsolution.com/terms  Data deletion: https://bot.apexgrowthsolution.com/data-deletion
 ```
 
 ### Test credentials: options
 
 - **Default (recommended):** no credentials. Reviewers test by messaging the Page/IG account; the admin-side flow is covered by the screencast. Meta explicitly accepts this for server-to-server messaging apps.
 - **If the form insists on dashboard access:** create a dedicated temporary login:
-  `php artisan admin:create reviewer@<your-domain> --name="Meta Reviewer"` → paste the URL `{BASE}/login`, email and password into *"Test credentials / Additional notes"*. There is no read-only role, so delete the user right after the review.
+  `php artisan admin:create reviewer@<your-domain> --name="Meta Reviewer"` → paste the URL `https://bot.apexgrowthsolution.com/login`, email and password into *"Test credentials / Additional notes"*. There is no read-only role, so delete the user right after the review.
 - Never give reviewers your personal Facebook credentials, and don't ask them to log in to Facebook with a test account you created (against Meta's terms).
 - Make sure **the Page is published** (not restricted by country/age) and the IG account is **public professional** with *Allow access to messages* enabled (Instagram app → Settings → Messages and story replies → Message controls / Connected tools).
 
@@ -227,9 +227,9 @@ Privacy Policy: {BASE}/privacy  Terms: {BASE}/terms  Data deletion: {BASE}/data-
 
 | Rejection | Avoid it by |
 |---|---|
-| Privacy policy URL invalid / not loading / behind a login or interstitial | Real HTTPS domain; `{BASE}/privacy` is public, no login, no ngrok warning page |
+| Privacy policy URL invalid / not loading / behind a login or interstitial | Real HTTPS domain; `https://bot.apexgrowthsolution.com/privacy` is public, no login, no ngrok warning page |
 | Privacy policy doesn't explain Meta data or deletion | Our policy lists every field received, AI sub-processors, retention, and links the deletion page |
-| Screencast doesn't show the permission being granted / Login flow | Start each video with the Facebook Login dialog showing **Custom Bot Integration** and the requested permissions (see `docs/APP_REVIEW_SCREENCAST.md`) |
+| Screencast doesn't show the permission being granted / Login flow | Start each video with the Facebook Login dialog showing **Apex Chat Bot** and the requested permissions (see `docs/APP_REVIEW_SCREENCAST.md`) |
 | Screencast doesn't show the end-to-end use | Show Page selection → DM from a separate user account → bot reply → human reply from dashboard |
 | Couldn't reproduce / bot didn't answer | Server + queue worker + tunnel running 24/7 during review (usually 1–7 days); webhook subscribed for both Page and IG; app secret set |
 | Requested permission not needed / not demonstrated | Request only what the table in section 4 marks "Yes"; drop `business_management` if possible; don't request `instagram_business_*` unless you use Instagram Login |
@@ -260,7 +260,7 @@ Minimal VPS path (Ubuntu 24.04, 1 vCPU / 2 GB is enough):
 
 ## 8. Submit, then go live
 
-1. **App Review → Requests → Submit for review.** Typical turnaround: 1–7 days. Keep the server up and check `{EMAIL}` + the Developer notifications.
+1. **App Review → Requests → Submit for review.** Typical turnaround: 1–7 days. Keep the server up and check `support@bot.apexgrowthsolution.com` + the Developer notifications.
 2. If rejected: read the reviewer notes per permission, fix only what they point at, re-record the specific screencast, resubmit (approved permissions stay approved).
 3. After approval: **App settings → Basic → App Mode: switch to Live** (or **Publish** in the new dashboard). Path A: publish right after sections 1–3.
 4. Confirm the access levels show **Advanced Access** for each approved permission.
